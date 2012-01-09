@@ -1,7 +1,7 @@
 %%% Simple right wall follow algorithm %%%
 function [v, om] = PocLoc1(laser_rp)
 
-% Naive force-summation-based technique for steering... this will tend to just head for region of lowest net potential when optimized
+% Force-summation-based technique for steering... this will tend to just head for region of lowest net potential when optimized
 % Useful for A* guidance
 
 %F_x = 0;
