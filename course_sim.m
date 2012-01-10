@@ -1,6 +1,6 @@
 cla, clc, clear
 hold on
-
+target_head = -90;
 %%% Field Walls are set up here as a list of line segments %%%
 max_dim = 248; % Maximum field dimensions in centimeters
 axis([-20,max_dim+20,-20,max_dim+20])
@@ -107,7 +107,7 @@ for t = 0:dt:5000
     end
     %%% Show special laser lines in different colors %%%
     line([r_pose(1),laser_xy(36,1)],[r_pose(2),laser_xy(36,2)], 'Color','g') % Heading beam
-    for index = [1, 3, 6, 9] % To add laser lines to display enter their index in the square bracket
+    for index = [27] % To add laser lines to display enter their index in the square bracket
         line([r_pose(1),laser_xy(index,1)],[r_pose(2),laser_xy(index,2)], 'Color','r')
     end
     
@@ -123,7 +123,7 @@ for t = 0:dt:5000
     % *** Potential Field Navigation *** %
     vp = v;
     omp = om;
-    [v, om] = PocLoc1(laser_rp);
+    [v, om, target_head] = PocLoc1(laser_rp, (r_pose(3)*180/pi), target_head);
     
     %%% MOTION NOISE %%%
     v = v + .2*rand(1);
@@ -137,6 +137,6 @@ for t = 0:dt:5000
     r_pose(3) = r_pose(3) + om*dt;
     r_pose(1) = r_pose(1) + v*cos(r_pose(3));
     r_pose(2) = r_pose(2) + v*sin(r_pose(3));
-    
+    disp((r_pose(3) * 180/pi)+90);
     pause(1/256)
 end
