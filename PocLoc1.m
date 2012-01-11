@@ -66,11 +66,11 @@ d = weight1*d1 + weight2*d2 + weight3*d3;
 %om = -.065*(d);
 
 om = 0;
-if(d > 30)
-	om = -1;
+if(d > 30 || laser_rp(36) < 30)
+	om = -0.5%-1;
 endif
-if(d < 30)
-	om = 1;
+if(d < 30 || laser_rp(36) < 30)
+	om = 0.5%1;
 endif
 v = (0.01*abs(om))*laser_rp(36);
 
