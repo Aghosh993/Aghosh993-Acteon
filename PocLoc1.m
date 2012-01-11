@@ -25,16 +25,55 @@ function [v, om, k] = PocLoc1(laser_rp, my_pose, target_pose)
 %om = next_dir(laser_rp) * -.04;
 
 %target_theta = my_pose;
-if((laser_rp(24) < 45 || laser_rp(6) < 45) && laser_rp(26) > 50)
-	target_pose = my_pose - 90;
-	k = my_pose - 90;
-endif
+
+%if((laser_rp(24) < 45 || laser_rp(6) < 45) && laser_rp(26) > 50)
+%	target_pose = my_pose - 90;
+%	k = my_pose - 90;
+%endif
 k = target_pose;
-v = .02*laser_rp(36);
-om = -.08 * (my_pose - target_pose);
-disp(my_pose);
-disp(target_pose);
-disp("=====");
+%v = .02*laser_rp(36);
+%om = -.08 * (my_pose - target_pose);
+%disp(my_pose);
+%disp(target_pose);
+%disp("=====");
+
+%v = 0.02 * laser_rp(36);
+%om = 0.06 * (laser_rp(32) - 20);
+
+weight1 = 0.2;%0.30;
+weight2 = 0.45;
+weight3 = 0.35;
+
+d1 = laser_rp(27);
+d2 = laser_rp(29);
+d3 = laser_rp(31);
+
+if(d1 > 40)
+	d1 = 40;
+endif;
+
+if(d2 > 40)
+	d2 = 40;
+endif;
+
+if(d2 > 40)
+	d2 = 40;
+endif;
+
+d = weight1*d1 + weight2*d2 + weight3*d3;
+
+%v = 0.02*laser_rp(36);
+%om = -.065*(d);
+
+om = 0;
+if(d > 30)
+	om = -1;
+endif
+if(d < 30)
+	om = 1;
+endif
+v = (0.01*abs(om))*laser_rp(36);
+
 %if(laser_rp(27) < laser_rp(9))
 %d_min = min(laser_rp(27),min(laser_rp(26),min(laser_rp(27),min(laser_rp(28),laser_rp(27)))));
 %if(laser_rp(27) > 25

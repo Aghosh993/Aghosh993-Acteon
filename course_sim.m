@@ -107,7 +107,7 @@ for t = 0:dt:5000
     end
     %%% Show special laser lines in different colors %%%
     line([r_pose(1),laser_xy(36,1)],[r_pose(2),laser_xy(36,2)], 'Color','g') % Heading beam
-    for index = [27] % To add laser lines to display enter their index in the square bracket
+    for index = [27, 29, 31] % To add laser lines to display enter their index in the square bracket
         line([r_pose(1),laser_xy(index,1)],[r_pose(2),laser_xy(index,2)], 'Color','r')
     end
     
