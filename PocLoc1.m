@@ -40,13 +40,13 @@ k = target_pose;
 %v = 0.02 * laser_rp(36);
 %om = 0.06 * (laser_rp(32) - 20);
 
-weight1 = 0.2;%0.30;
-weight2 = 0.45;
-weight3 = 0.35;
+weight1 = 0.3; %0.2;
+weight2 = 0.2; %0.45;
+weight3 = 0.5; %0.35;
 
-d1 = laser_rp(27);
-d2 = laser_rp(29);
-d3 = laser_rp(31);
+d1 = laser_rp(26); %27
+d2 = laser_rp(28); %29
+d3 = laser_rp(30); %31
 
 if(d1 > 40)
 	d1 = 40;
@@ -66,13 +66,14 @@ d = weight1*d1 + weight2*d2 + weight3*d3;
 %om = -.065*(d);
 
 om = 0;
-if(d > 30 || laser_rp(36) < 30)
-	om = -0.5%-1;
+d_set = 30;
+if(d > d_set || laser_rp(36) < d_set)
+	om = -0.3;
 endif
-if(d < 30 || laser_rp(36) < 30)
-	om = 0.5%1;
+if(d < d_set || laser_rp(36) < d_set)
+	om = 0.3;
 endif
-v = (0.01*abs(om))*laser_rp(36);
+v = (0.018*abs(om))*laser_rp(36);
 
 %if(laser_rp(27) < laser_rp(9))
 %d_min = min(laser_rp(27),min(laser_rp(26),min(laser_rp(27),min(laser_rp(28),laser_rp(27)))));
