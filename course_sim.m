@@ -107,7 +107,7 @@ for t = 0:dt:5000
     end
     %%% Show special laser lines in different colors %%%
     line([r_pose(1),laser_xy(36,1)],[r_pose(2),laser_xy(36,2)], 'Color','g') % Heading beam
-    for index = [27, 29, 31] % To add laser lines to display enter their index in the square bracket
+    for index = [8, 10, 27, 29, 31] % To add laser lines to display enter their index in the square bracket
         line([r_pose(1),laser_xy(index,1)],[r_pose(2),laser_xy(index,2)], 'Color','r')
     end
     
@@ -121,6 +121,10 @@ for t = 0:dt:5000
 
     
     % *** Potential Field Navigation *** %
+    disp("Beam 8:");
+    disp(laser_rp(8));
+    disp("Beam 10:");
+    disp(laser_rp(10));
     vp = v;
     omp = om;
     [v, om, target_head] = PocLoc1(laser_rp, (r_pose(3)*180/pi), target_head);
