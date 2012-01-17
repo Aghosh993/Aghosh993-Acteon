@@ -1,6 +1,45 @@
 %%% Simple right wall follow algorithm %%%
 function [v, om, k] = PocLoc1(laser_rp, my_pose, target_pose)
 
+weight1 = 0.3; %0.3;
+weight2 = 0.2; %0.2;
+weight3 = 0.5; %0.5;
+
+d1 = laser_rp(26); %27
+d2 = laser_rp(28); %29
+d3 = laser_rp(30); %31
+
+if(d1 > 40)
+	d1 = 40;
+endif;
+
+if(d2 > 40)
+	d2 = 40;
+endif;
+
+if(d2 > 40)
+	d2 = 40;
+endif;
+
+d = weight1*d1 + weight2*d2 + weight3*d3;
+
+om = 0;
+d_set = 30;
+if(d > d_set || laser_rp(36) < d_set)
+	om = -0.3;
+endif
+if(d < d_set || laser_rp(36) < d_set)
+	om = 0.3;
+endif
+v = (0.018*abs(om))*laser_rp(36);
+
+
+
+if(laser_rp(10) > 83 && laser_rp(10) < 89 && laser_rp(36) > 80 && laser_rp(36) < 90 && laser_rp(18) > 110 && my_pose < 15)% && laser_rp(18) > 110)
+	om = 9.5;
+endif
+
+
 % Force-summation-based technique for steering... this will tend to just head for region of lowest net potential when optimized
 % Useful for A* guidance
 
@@ -30,7 +69,7 @@ function [v, om, k] = PocLoc1(laser_rp, my_pose, target_pose)
 %	target_pose = my_pose - 90;
 %	k = my_pose - 90;
 %endif
-k = target_pose;
+%k = target_pose;
 %v = .02*laser_rp(36);
 %om = -.08 * (my_pose - target_pose);
 %disp(my_pose);
@@ -40,40 +79,9 @@ k = target_pose;
 %v = 0.02 * laser_rp(36);
 %om = 0.06 * (laser_rp(32) - 20);
 
-weight1 = 0.3; %0.2;
-weight2 = 0.2; %0.45;
-weight3 = 0.5; %0.35;
 
-d1 = laser_rp(26); %27
-d2 = laser_rp(28); %29
-d3 = laser_rp(30); %31
 
-if(d1 > 40)
-	d1 = 40;
-endif;
 
-if(d2 > 40)
-	d2 = 40;
-endif;
-
-if(d2 > 40)
-	d2 = 40;
-endif;
-
-d = weight1*d1 + weight2*d2 + weight3*d3;
-
-%v = 0.02*laser_rp(36);
-%om = -.065*(d);
-
-om = 0;
-d_set = 30;
-if(d > d_set || laser_rp(36) < d_set)
-	om = -0.3;
-endif
-if(d < d_set || laser_rp(36) < d_set)
-	om = 0.3;
-endif
-v = (0.018*abs(om))*laser_rp(36);
 
 %if(laser_rp(27) < laser_rp(9))
 %d_min = min(laser_rp(27),min(laser_rp(26),min(laser_rp(27),min(laser_rp(28),laser_rp(27)))));

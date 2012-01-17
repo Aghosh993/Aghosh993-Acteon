@@ -35,6 +35,7 @@ field_walls = [outer_walls;island_walls;lr_walls;ll_walls;ur_walls];
 
 %%% Initialization parameters for robot and sensor %%%
 r_pose_start = [100,225,(pi/180)*(-90)]; % Starting pose of the robot
+%r_pose_start = [175,68,(pi/180)*(-180)]; % Starting pose of the robot
 r_pose = r_pose_start;
 num_readings = 36; % Number of sensor readings
 angle_increment = 10*(pi/180); % Angular displacement between readings in radians
@@ -128,6 +129,7 @@ for t = 0:dt:5000
     vp = v;
     omp = om;
     [v, om, target_head] = PocLoc1(laser_rp, (r_pose(3)*180/pi), target_head);
+%    [v, om] = PocLoc2(laser_rp);
     
     %%% MOTION NOISE %%%
     v = v + .2*rand(1);
@@ -141,6 +143,6 @@ for t = 0:dt:5000
     r_pose(3) = r_pose(3) + om*dt;
     r_pose(1) = r_pose(1) + v*cos(r_pose(3));
     r_pose(2) = r_pose(2) + v*sin(r_pose(3));
-    disp((r_pose(3) * 180/pi)+90);
+    disp((r_pose(3) * 180/pi));
     pause(1/256)
 end
