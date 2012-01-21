@@ -8,6 +8,7 @@ weight3 = 0.5; %0.5;
 d1 = laser_rp(26); %27
 d2 = laser_rp(28); %29
 d3 = laser_rp(30); %31
+%d3 = laser_rp(31); % was 30
 
 if(d1 > 40)
 	d1 = 40;
@@ -22,22 +23,26 @@ if(d2 > 40)
 endif;
 
 d = weight1*d1 + weight2*d2 + weight3*d3;
+d_2 = min(laser_rp(26), min(laser_rp(27), min(laser_rp(28), min(laser_rp(29), laser_rp(30)))));
+d_net = 0.85*d - 0.7*(1000/((d_2 - 20)^2));
 
 om = 0;
-d_set = 30;
-if(d > d_set || laser_rp(36) < d_set)
-	om = -0.3;
+d_set = 26; %30
+if(d_net > d_set || laser_rp(36) < d_set)
+	om = -0.2;
 endif
-if(d < d_set || laser_rp(36) < d_set)
-	om = 0.3;
+if(d_net < d_set || laser_rp(36) < d_set)
+	om = 0.2;
 endif
-v = (0.018*abs(om))*laser_rp(36);
+%%om = -.008*(d - 30);
+v = (.038*(abs(om)))*laser_rp(36);
 
 
 
-if(laser_rp(10) > 83 && laser_rp(10) < 89 && laser_rp(36) > 80 && laser_rp(36) < 90 && laser_rp(18) > 110 && my_pose < 15)% && laser_rp(18) > 110)
-	om = 9.5;
-endif
+%if(laser_rp(10) > 83 && laser_rp(10) < 89 && laser_rp(36) > 80 && laser_rp(36) < 90 && laser_rp(18) > 110 && my_pose < 15)% && laser_rp(18) > 110)
+%	om = 9.5;
+%	theta_exploring_island = my_pose;
+%endif
 
 
 % Force-summation-based technique for steering... this will tend to just head for region of lowest net potential when optimized

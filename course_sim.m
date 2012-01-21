@@ -34,6 +34,7 @@ ur_walls = [ur_wall1;ur_wall2];
 field_walls = [outer_walls;island_walls;lr_walls;ll_walls;ur_walls];
 
 %%% Initialization parameters for robot and sensor %%%
+global theta_exploring_island = 0;
 r_pose_start = [100,225,(pi/180)*(-90)]; % Starting pose of the robot
 %r_pose_start = [175,68,(pi/180)*(-180)]; % Starting pose of the robot
 r_pose = r_pose_start;
@@ -122,10 +123,11 @@ for t = 0:dt:5000
 
     
     % *** Potential Field Navigation *** %
-    disp("Beam 8:");
-    disp(laser_rp(8));
-    disp("Beam 10:");
-    disp(laser_rp(10));
+  %  disp("Beam 8:");
+  %  disp(laser_rp(8));
+  %  disp("Beam 10:");
+  %  disp(laser_rp(10));
+    disp(theta_exploring_island);
     vp = v;
     omp = om;
     [v, om, target_head] = PocLoc1(laser_rp, (r_pose(3)*180/pi), target_head);
